@@ -224,7 +224,7 @@ public class ApiDAOImpl implements ApiDAO {
 
             if (api == null) {
                 throw new APIMgtDAOException("Composite API: " + apiID + " does not exist",
-                                                                        ExceptionCodes.API_NOT_FOUND);
+                        ExceptionCodes.API_NOT_FOUND);
             }
 
             return api;
@@ -254,7 +254,7 @@ public class ApiDAOImpl implements ApiDAO {
     public String getLastUpdatedTimeOfSwaggerDefinition(String apiId) throws APIMgtDAOException {
         try (Connection connection = DAOUtil.getConnection()) {
             String lastUpdatedTime = ApiResourceDAO.getAPIUniqueResourceLastUpdatedTime(connection, apiId,
-                                        ResourceCategory.SWAGGER);
+                    ResourceCategory.SWAGGER);
 
             if (lastUpdatedTime == null) {
                 throw new APIMgtDAOException("Swagger Definition of API: " + apiId + ", does not exist",
@@ -307,7 +307,7 @@ public class ApiDAOImpl implements ApiDAO {
                     + "') AND ((PROVIDER = ?) OR (PERMISSION.GROUP_ID IS NULL))";
         }
         try (Connection connection = DAOUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             int index = 0;
             if (roleCount > 0) {
                 for (String role : roles) {
@@ -991,7 +991,7 @@ public class ApiDAOImpl implements ApiDAO {
                     "checking if WSDL exists for API(api: " + apiId + ")", e);
         }
     }
-    
+
     @Override
     public String getWSDL(String apiId) throws APIMgtDAOException {
         try (Connection connection = DAOUtil.getConnection()) {
@@ -1209,7 +1209,7 @@ public class ApiDAOImpl implements ApiDAO {
                 + "FROM AM_API_COMMENTS WHERE UUID = ? AND API_ID = ?";
 
         try (Connection connection = DAOUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             try {
                 statement.setString(1, commentId);
                 statement.setString(2, apiId);
@@ -1270,7 +1270,7 @@ public class ApiDAOImpl implements ApiDAO {
                 "INSERT INTO AM_API_COMMENTS (UUID, COMMENT_TEXT, USER_IDENTIFIER, API_ID, " +
                         "CREATED_BY, CREATED_TIME, UPDATED_BY, LAST_UPDATED_TIME" + ") VALUES (?,?,?,?,?,?,?,?)";
         try (Connection connection = DAOUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(addCommentQuery)) {
+             PreparedStatement statement = connection.prepareStatement(addCommentQuery)) {
             try {
                 connection.setAutoCommit(false);
                 statement.setString(1, comment.getUuid());
@@ -1329,7 +1329,7 @@ public class ApiDAOImpl implements ApiDAO {
                 + ", UPDATED_BY = ? , LAST_UPDATED_TIME = ?"
                 + " WHERE UUID = ? AND API_ID = ?";
         try (Connection connection = DAOUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(updateCommentQuery)) {
+             PreparedStatement statement = connection.prepareStatement(updateCommentQuery)) {
             try {
                 connection.setAutoCommit(false);
                 statement.setString(1, comment.getCommentText());
@@ -1379,7 +1379,7 @@ public class ApiDAOImpl implements ApiDAO {
             String errorMessage = "getting all comments for API " + apiId;
             throw new APIMgtDAOException(DAOUtil.DAO_ERROR_PREFIX + errorMessage, e);
         }
-        return  commentList;
+        return commentList;
     }
 
     @Override
@@ -1410,7 +1410,7 @@ public class ApiDAOImpl implements ApiDAO {
                 connection.rollback();
                 String errorMessage = "adding rating for API: " + apiId;
                 throw new APIMgtDAOException(DAOUtil.DAO_ERROR_PREFIX + errorMessage, e);
-            }  finally {
+            } finally {
                 connection.setAutoCommit(DAOUtil.isAutoCommit());
             }
         } catch (SQLException e) {
@@ -1589,7 +1589,8 @@ public class ApiDAOImpl implements ApiDAO {
                     }
                 } else {
                     throw new APIMgtDAOException("Couldn't Find Endpoint Config for Endpoint: " + endpointId,
-                            ExceptionCodes.ENDPOINT_CONFIG_NOT_FOUND);                }
+                            ExceptionCodes.ENDPOINT_CONFIG_NOT_FOUND);
+                }
             }
         } catch (SQLException | IOException e) {
             String msg = "getting Endpoints Gateway Config for Endpoint: " + endpointId;
@@ -2291,9 +2292,9 @@ public class ApiDAOImpl implements ApiDAO {
     /**
      * Adding API permission to database
      *
-     * @param connection connection to database
+     * @param connection    connection to database
      * @param permissionMap permission map
-     * @param apiId id of the API
+     * @param apiId         id of the API
      * @throws SQLException if error occurred when adding API permission to database
      */
     private void addAPIPermission(Connection connection, Map permissionMap, String apiId) throws SQLException {
@@ -2326,9 +2327,9 @@ public class ApiDAOImpl implements ApiDAO {
     /**
      * Update API permission
      *
-     * @param connection connection to database
+     * @param connection    connection to database
      * @param permissionMap updated permission map
-     * @param apiId id of API to be updated permission
+     * @param apiId         id of API to be updated permission
      * @throws SQLException if error occurred when updating api permission
      */
     private void updateApiPermission(Connection connection, Map permissionMap, String apiId) throws SQLException {
@@ -2789,7 +2790,7 @@ public class ApiDAOImpl implements ApiDAO {
 
 
     private Endpoint getEndpoint(Connection connection, String endpointId) throws SQLException, IOException,
-                                                                APIMgtDAOException {
+            APIMgtDAOException {
         final String query = "SELECT UUID,NAME,ENDPOINT_CONFIGURATION,TPS,TYPE,"
                 + "SECURITY_CONFIGURATION,APPLICABLE_LEVEL FROM AM_ENDPOINT WHERE UUID = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -2879,7 +2880,7 @@ public class ApiDAOImpl implements ApiDAO {
      * This returns the json string containing the role permissions for a given API
      *
      * @param connection - DB connection
-     * @param apiId - apiId of the API
+     * @param apiId      - apiId of the API
      * @return permission string
      * @throws SQLException - if error occurred while getting permissionMap of API from DB
      */
@@ -2904,7 +2905,7 @@ public class ApiDAOImpl implements ApiDAO {
      * This constructs and returns the API permissions map from the DB
      *
      * @param connection - DB connection
-     * @param apiId - apiId of the API
+     * @param apiId      - apiId of the API
      * @return permission map for the API
      * @throws SQLException - if error occurred while getting permissionMap of API from DB
      */
